@@ -20,8 +20,8 @@ public class Pawn extends Piece
     public boolean isValidPath(int finalX, int finalY)
     {
         int ydif = (finalY - this.y);
-        if(this.firstMove && ydif==2)
-            return true;
+        //if(this.firstMove && ydif==2)
+         //   return true;
         if((ydif==1))
             return true;
         return false;
