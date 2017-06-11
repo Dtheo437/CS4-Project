@@ -32,11 +32,73 @@ public class Bishop extends Piece
     {
         return Type.BISHOP;
     }
-    public boolean isValidPath(int finalX, int finalY)
+    public boolean isValidPath(int finalX, int finalY, Piece[][] board)
     {
         int xdif = Math.abs(finalX - this.x);
         int ydif = Math.abs(finalY - this.y);
-        return xdif == ydif;
+        boolean fin = xdif==ydif;
+        if (finalX > this.x & finalY > this.y){
+            while (this.x != finalX & this.y != finalY){
+                if (board[this.x+1][this.y+1] != null){
+                    if (this.color == board[this.x+1][this.y+1].color){
+                        return false;
+                    }
+                    else {
+                        finalX = this.x+1;
+                        finalY = this.y+1;
+                    }
+                }
+                this.x++;
+                this.y++;
+            }
+        }
+        else if(finalX < this.x & finalY < this.y){
+            while (this.x != finalX & this.y != finalY){
+                if (board[this.x-1][this.y-1] != null){
+                    if (this.color == board[this.x-1][this.y-1].color){
+                        return false;
+                    }
+                    else {
+                        finalX = this.x-1;
+                        finalY = this.y-1;
+                    }
+                }
+                this.x--;
+                this.y--;
+            }
+        }
+        else if(finalX > this.x & finalY < this.y){
+            while (this.x != finalX & this.y != finalY){
+                if (board[this.x+1][this.y-1] != null){
+                    if (this.color == board[this.x+1][this.y-1].color){
+                        return false;
+                    }
+                    else {
+                        finalX = this.x+1;
+                        finalY = this.y-1;
+                    }
+                }
+                this.x++;
+                this.y--;
+            }
+        }
+        else if(finalX < this.x & finalY > this.y){
+            while (this.x != finalX & this.y != finalY){
+                if (board[this.x-1][this.y+1] != null){
+                    if (this.color == board[this.x-1][this.y+1].color){
+                        return false;
+                    }
+                    else {
+                        finalX = this.x-1;
+                        finalY = this.y+1;
+                    }
+                }
+                this.x--;
+                this.y++;
+            }
+        }
+        return fin;
+
     }
 
     public void draw(Canvas canvas) {
