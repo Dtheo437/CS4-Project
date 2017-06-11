@@ -1,4 +1,6 @@
 package Pieces;
+import android.graphics.Canvas;
+
 import com.example.aj.chessapp.*;
 /**
  * Created by AJ on 6/5/2017.
@@ -7,7 +9,7 @@ import com.example.aj.chessapp.*;
 public class Pawn extends Piece
 {
     Type type;
-    public Pawn(int x, int y, Color color, Boolean firstMove)
+    public Pawn(int x, int y, int color, Boolean firstMove)
     {
         super(x,y,color);
         type = Type.PAWN;
@@ -17,6 +19,12 @@ public class Pawn extends Piece
     {
         return Type.PAWN;
     }
+
+    @Override
+    public void draw(Canvas canvas) {
+
+    }
+
     public boolean isValidPath(int finalX, int finalY)
     {
         int ydif = (finalY - this.y);

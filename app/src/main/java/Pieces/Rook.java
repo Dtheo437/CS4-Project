@@ -1,4 +1,6 @@
 package Pieces;
+import android.graphics.Canvas;
+
 import com.example.aj.chessapp.*;
 
 /**
@@ -8,7 +10,7 @@ import com.example.aj.chessapp.*;
 public class Rook extends Piece
 {
     Type type;
-    public Rook(int x, int y, Color color)
+    public Rook(int x, int y, int color)
     {
         super(x,y,color);
         type = Type.ROOK;
@@ -17,6 +19,12 @@ public class Rook extends Piece
     {
         return Type.ROOK;
     }
+
+    @Override
+    public void draw(Canvas canvas) {
+
+    }
+
     public boolean isValidPath(int finalX, int finalY)
     {
         int xdif = Math.abs(finalX - this.x);

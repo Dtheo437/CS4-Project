@@ -3,25 +3,38 @@ package com.example.aj.chessapp;
 import android.graphics.*;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.content.Context;
+import android.widget.ImageView;
+
+import Pieces.Bishop;
+import Pieces.Piece;
+
+import static com.example.aj.chessapp.R.drawable.bb;
+
 /**
  * Created by AJ on 6/7/2017.
  */
 
 public class GameView extends View
 {
+    private Piece[][] board;
+    public static float squareSize;
     public GameView(Context context, AttributeSet attr)
     {
         super(context);
+
+        board = new Piece[8][8];
+        board[0][0] = new Bishop(0, 0, Piece.BLACK, getResources());
+        board[4][7] = new Bishop(4, 7, Piece.BLACK, getResources());
 
     }
     protected void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
-
         int lightBrown = Color.rgb(214, 201, 154);
         int darkBrown = Color.rgb(94, 86, 58);
 
@@ -30,7 +43,9 @@ public class GameView extends View
         squareColor.setStyle(Paint.Style.FILL);
         int width = canvas.getWidth();
         int height = canvas.getHeight();
-        float squareSize = width / 8.0f;
+        squareSize = width / 8.0f;
+
+        //that makes no sense jason its in just watch
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -41,8 +56,9 @@ public class GameView extends View
                 canvas.drawRect(left, top, right, bottom, squareColor);
 
                 //Draw pieces
-//                Drawable piece = getResources().getDrawable(R.drawable.bb);
-//                piece.draw(canvas);
+                if (board[i][j] != null) {
+                    board[i][j].draw(canvas);
+                }
 
                 // Alternate colors for squares
                 if (squareColor.getColor() == lightBrown) {
@@ -57,6 +73,7 @@ public class GameView extends View
                 squareColor.setColor(lightBrown);
             }
         }
+
 //        Rect Rect1 = new Rect();
 //        Rect1.set(0, 0, canvas.getWidth()/8,canvas.getHeight()/8);
 //        Rect Rect2 = new Rect();

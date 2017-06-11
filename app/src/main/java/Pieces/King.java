@@ -1,4 +1,6 @@
 package Pieces;
+import android.graphics.Canvas;
+
 import com.example.aj.chessapp.*;
 /**
  * Created by AJ on 6/5/2017.
@@ -7,7 +9,7 @@ import com.example.aj.chessapp.*;
 public class King extends Piece
 {
     Type type;
-    public King(int x, int y, Color color)
+    public King(int x, int y, int color)
     {
         super(x,y,color);
         type = Type.KING;
@@ -16,6 +18,12 @@ public class King extends Piece
     {
         return Type.KING;
     }
+
+    @Override
+    public void draw(Canvas canvas) {
+
+    }
+
     public boolean isValidPath(int finalX, int finalY)
     {
         int xdif = Math.abs(finalX - this.x);

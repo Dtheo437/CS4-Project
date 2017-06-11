@@ -10,4 +10,6 @@ public class Color
     {
         char col = c;
     }
+    //how about 1 number 1 or 0
+    //rip
 }

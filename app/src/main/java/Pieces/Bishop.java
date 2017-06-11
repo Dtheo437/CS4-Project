@@ -1,16 +1,29 @@
 package Pieces;
+import android.app.Application;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+
 import com.example.aj.chessapp.*;
+
+import static com.example.aj.chessapp.R.drawable.bb;
+
 /**
  * Created by AJ on 6/5/2017.
  */
 
 public class Bishop extends Piece
 {
+    private Bitmap bb;
     Type type;
-    public Bishop(int x, int y, Color color)
+    public Bishop(int x, int y, int color, Resources res)
     {
         super(x,y,color);
         type = Type.BISHOP;
+        bb = BitmapFactory.decodeResource(res, R.drawable.bb);
     }
     public Type getType()
     {
@@ -22,7 +35,18 @@ public class Bishop extends Piece
         int ydif = Math.abs(finalY - this.y);
         return xdif == ydif;
     }
-    /*
+
+    public void draw(Canvas canvas) {
+        Paint p = new Paint();
+        Rect src = new Rect(0, 0, bb.getWidth(), bb.getHeight());
+        int xSpot = x * (int)GameView.squareSize;
+        int ySpot = y * (int)GameView.squareSize;
+        Rect dst = new Rect(xSpot, ySpot, (int)GameView.squareSize + xSpot, (int)GameView.squareSize + ySpot);
+        Rect trial = new Rect(xSpot, ySpot, (int)GameView.squareSize + xSpot, (int)GameView.squareSize + ySpot);
+        canvas.drawBitmap(bb, src, dst, p);
+        canvas.drawBitmap(bb, src, trial, p);
+    }
+
     public int [][] move(int startX, int startY, int finalX, int finalY)
     {
         int pairs = Math.abs(finalX - startX); //length of path
@@ -43,5 +67,5 @@ public class Bishop extends Piece
         }
         return path;
     }
-    */
+    //probably something to do with rect constructor ok the constructor is left top right bottom right? maybe
 }
