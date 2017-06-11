@@ -21,7 +21,7 @@ public abstract class Piece
         this.y = y;
         this.color = color;
     }
-    public abstract boolean isValidPath(int finalX, int finalY);
+    public abstract boolean isValidPath(int finalX, int finalY, Piece[][] board);
     //Checks if the path is valid
     //public abstract int[][] move(int startX, int startY, int finalX, int finalY);
     //Provides a set of movement commands for the piece
