@@ -9,6 +9,8 @@ import android.util.Log;
 
 import com.example.aj.chessapp.*;
 
+import java.io.PipedReader;
+
 /**
  * Created by AJ on 6/5/2017.
  */
@@ -55,12 +57,65 @@ public class Rook extends Piece
         }
     }
 
-    public boolean isValidPath(int finalX, int finalY)
+    public boolean isValidPath(int finalX, int finalY, Piece [][] board)
     {
         int xdif = Math.abs(finalX - this.x);
         int ydif = Math.abs(finalY - this.y);
-        if((xdif<=7 && ydif ==0) || (xdif==0 && ydif<=7))
-            return true;
+        if(xdif<=7 && ydif ==0){
+            if (finalX > this.x) {
+                while (finalX != this.x) {
+                    if (board[this.x + 1][this.y] != null) {
+                        if (this.color == board[this.x + 1][this.y].color) {
+                            return false;
+                        }
+                        else
+                            finalX = this.x+1;
+                    }
+                    this.x++;
+                }
+                return true;
+            }
+            else if (finalX < this.x) {
+                while (finalX != this.x) {
+                    if (board[this.x - 1][this.y] != null) {
+                        if (this.color == board[this.x - 1][this.y].color) {
+                            return false;
+                        }
+                        else
+                            finalX = this.x-1;
+                    }
+                    this.x--;
+                }
+                return true;
+            }
+        }
+        else if (xdif==0 && ydif<=7){
+            if (finalY > this.y) {
+                while (finalY != this.y) {
+                    if (board[this.x][this.y+1] != null) {
+                        if (this.color == board[this.x][this.y + 1].color) {
+                            return false;
+                        } else
+                            finalY = this.y+1;
+                    }
+                    this.y++;
+                }
+                return true;
+            }
+            else if (finalY < this.y) {
+                while (finalY != this.y) {
+                    if (board[this.x][this.y - 1] != null) {
+                        if (this.color == board[this.x][this.y - 1].color) {
+                            return false;
+                        }
+                        else
+                            finalY = this.y-1;
+                    }
+                    this.y--;
+                }
+                return true;
+            }
+        }
         return false;
     }
 }

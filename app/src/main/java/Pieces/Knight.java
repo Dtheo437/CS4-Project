@@ -54,10 +54,15 @@ public class Knight extends Piece
         }
     }
 
-    public boolean isValidPath(int finalX, int finalY)
+    public boolean isValidPath(int finalX, int finalY, Piece [][] board)
     {
         int xdif = Math.abs(finalX - this.x);
         int ydif = Math.abs(finalY - this.y);
+        if (board[finalX][finalY] != null){
+            if (this.color == board[finalX][finalY].color){
+                return false;
+            }
+        }
         if((xdif == 2 && ydif==1) || (xdif == 1 && ydif==2))
             return true;
         return false;

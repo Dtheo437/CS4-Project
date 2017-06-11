@@ -17,7 +17,8 @@ public class Pawn extends Piece
     private Bitmap bp;
     private Bitmap wp;
     Type type;
-    public Pawn(int x, int y, int color, Boolean firstMove, Resources res)
+    Boolean firstMove;
+    public Pawn(int x, int y, int color, Resources res)
     {
         super(x,y,color);
         type = Type.PAWN;
@@ -55,13 +56,47 @@ public class Pawn extends Piece
         }
     }
 
-    public boolean isValidPath(int finalX, int finalY)
+    public boolean isValidPath(int finalX, int finalY, Piece [][] board)
     {
-        int ydif = (finalY - this.y);
-        //if(this.firstMove && ydif==2)
-         //   return true;
-        if((ydif==1))
+        int ydif = Math.abs(finalY - this.y);
+        int xdif = Math.abs(finalX - this.x);
+        if(xdif == 1 && ydif != 1){
+            return false;
+        }
+        else if(xdif == 1 && ydif == 1){
+            if (board[finalX][finalY].color == this.color){
+                return false;
+            }
+            else
+                return true;
+        }
+        else if(this.firstMove && ydif == 2 && xdif == 0){
+            if(finalY > this.y){
+                while(this.y != finalY) {
+                    if(board[this.x][this.y+1] != null){
+                        return false;
+                    }
+                    this.y++;
+                }
+                return true;
+            }
+            if(finalY < this.y){
+                while(this.y != finalY) {
+                    if(board[this.x][this.y-1] != null){
+                        return false;
+                    }
+                    this.y--;
+                }
+                return true;
+            }
+        }
+        if((ydif == 1 && xdif == 0)) {
+            if (board[finalX][finalY] != null) {
+                return false;
+            }
             return true;
-        return false;
+        }
+        else
+            return false;
     }
 }
