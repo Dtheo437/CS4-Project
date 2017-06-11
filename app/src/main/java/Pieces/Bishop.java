@@ -40,9 +40,8 @@ public class Bishop extends Piece
     {
         int xdif = Math.abs(finalX - this.x);
         int ydif = Math.abs(finalY - this.y);
-        boolean fin = xdif==ydif;
-        if (finalX > this.x & finalY > this.y){
-            while (this.x != finalX & this.y != finalY){
+        if (finalX > this.x && finalY > this.y){
+            while (this.x != finalX && this.y != finalY){
                 if (board[this.x+1][this.y+1] != null){
                     if (this.color == board[this.x+1][this.y+1].color){
                         return false;
@@ -55,9 +54,10 @@ public class Bishop extends Piece
                 this.x++;
                 this.y++;
             }
+            return true;
         }
-        else if(finalX < this.x & finalY < this.y){
-            while (this.x != finalX & this.y != finalY){
+        else if(finalX < this.x && finalY < this.y){
+            while (this.x != finalX && this.y != finalY){
                 if (board[this.x-1][this.y-1] != null){
                     if (this.color == board[this.x-1][this.y-1].color){
                         return false;
@@ -70,9 +70,10 @@ public class Bishop extends Piece
                 this.x--;
                 this.y--;
             }
+            return true;
         }
-        else if(finalX > this.x & finalY < this.y){
-            while (this.x != finalX & this.y != finalY){
+        else if(finalX > this.x && finalY < this.y){
+            while (this.x != finalX && this.y != finalY){
                 if (board[this.x+1][this.y-1] != null){
                     if (this.color == board[this.x+1][this.y-1].color){
                         return false;
@@ -85,9 +86,10 @@ public class Bishop extends Piece
                 this.x++;
                 this.y--;
             }
+            return true;
         }
-        else if(finalX < this.x & finalY > this.y){
-            while (this.x != finalX & this.y != finalY){
+        else if(finalX < this.x && finalY > this.y){
+            while (this.x != finalX && this.y != finalY){
                 if (board[this.x-1][this.y+1] != null){
                     if (this.color == board[this.x-1][this.y+1].color){
                         return false;
@@ -100,9 +102,10 @@ public class Bishop extends Piece
                 this.x--;
                 this.y++;
             }
+            return true;
         }
-        return fin;
-
+        else
+            return false;
     }
 
     public void draw(Canvas canvas) {
