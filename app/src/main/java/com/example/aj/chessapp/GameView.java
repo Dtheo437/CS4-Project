@@ -11,6 +11,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import Pieces.Bishop;
+import Pieces.King;
 import Pieces.Piece;
 
 import static com.example.aj.chessapp.R.drawable.bb;
@@ -28,9 +29,11 @@ public class GameView extends View
         super(context);
 
         board = new Piece[8][8];
-        board[0][0] = new Bishop(0, 0, Piece.BLACK, getResources());
-        board[4][7] = new Bishop(4, 7, Piece.BLACK, getResources());
-
+//        board[0][0] = new Bishop(0, 0, Piece.BLACK, getResources());
+        board[4][4] = new Bishop(4, 4, Piece.WHITE, getResources());
+        board[4][5] = new Bishop(4, 5, Piece.BLACK, getResources());
+        board[6][4] = new Bishop(6, 4, Piece.BLACK, getResources());
+        board[0][0] = new King(0, 0, Piece.BLACK, getResources());
     }
     protected void onDraw(Canvas canvas)
     {
@@ -44,8 +47,6 @@ public class GameView extends View
         int width = canvas.getWidth();
         int height = canvas.getHeight();
         squareSize = width / 8.0f;
-
-        //that makes no sense jason its in just watch
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
