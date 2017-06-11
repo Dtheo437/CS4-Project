@@ -26,5 +26,6 @@ public abstract class Piece
     //public abstract int[][] move(int startX, int startY, int finalX, int finalY);
     //Provides a set of movement commands for the piece
     public abstract Type getType();
+    public abstract int getColor();
     public abstract void draw(Canvas canvas);
 }

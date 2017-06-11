@@ -29,7 +29,10 @@ public class Rook extends Piece
     {
         return Type.ROOK;
     }
-
+    public int getColor()
+    {
+        return this.color;
+    }
     @Override
     public void draw(Canvas canvas) {
         if(color == 0)
@@ -55,7 +58,7 @@ public class Rook extends Piece
         }
     }
 
-    public boolean isValidPath(int finalX, int finalY)
+    public boolean isValidPath(int finalX, int finalY,Piece[][] board)
     {
         int xdif = Math.abs(finalX - this.x);
         int ydif = Math.abs(finalY - this.y);

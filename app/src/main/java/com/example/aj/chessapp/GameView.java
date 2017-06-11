@@ -6,13 +6,18 @@ import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.content.Context;
 import android.widget.ImageView;
 
 import Pieces.Bishop;
 import Pieces.King;
+import Pieces.Knight;
+import Pieces.Pawn;
 import Pieces.Piece;
+import Pieces.Queen;
+import Pieces.Rook;
 
 import static com.example.aj.chessapp.R.drawable.bb;
 
@@ -23,18 +28,97 @@ import static com.example.aj.chessapp.R.drawable.bb;
 public class GameView extends View
 {
     private Piece[][] board;
+    public Piece selectedPiece;
+    public Piece selectedPiece2;
+    public boolean whiteTurn;
     public static float squareSize;
     public GameView(Context context, AttributeSet attr)
     {
         super(context);
-
+        whiteTurn = true;
         board = new Piece[8][8];
-//        board[0][0] = new Bishop(0, 0, Piece.BLACK, getResources());
-        board[4][4] = new Bishop(4, 4, Piece.WHITE, getResources());
-        board[4][5] = new Bishop(4, 5, Piece.BLACK, getResources());
-        board[6][4] = new Bishop(6, 4, Piece.BLACK, getResources());
-        board[0][0] = new King(0, 0, Piece.BLACK, getResources());
+        board[0][0] = new Rook(0, 0, Piece.BLACK, getResources());
+        board[1][0] = new Knight(1, 0, Piece.BLACK, getResources());
+        board[2][0] = new Bishop(2, 0, Piece.BLACK, getResources());
+        board[3][0] = new Queen(3, 0, Piece.BLACK, getResources());
+        board[4][0] = new King(4, 0, Piece.BLACK, getResources());
+        board[5][0] = new Bishop(5, 0, Piece.BLACK, getResources());
+        board[6][0] = new Knight(6, 0, Piece.BLACK, getResources());
+        board[7][0] = new Rook(7, 0, Piece.BLACK, getResources());
+
+        board[0][1] = new Pawn(0, 1, Piece.BLACK, getResources());
+        board[1][1] = new Pawn(1, 1, Piece.BLACK, getResources());
+        board[2][1] = new Pawn(2, 1, Piece.BLACK, getResources());
+        board[3][1] = new Pawn(3, 1, Piece.BLACK, getResources());
+        board[4][1] = new Pawn(4, 1, Piece.BLACK, getResources());
+        board[5][1] = new Pawn(5, 1, Piece.BLACK, getResources());
+        board[6][1] = new Pawn(6, 1, Piece.BLACK, getResources());
+        board[7][1] = new Pawn(7, 1, Piece.BLACK, getResources());
+
+        board[0][7] = new Rook(0, 7, Piece.WHITE, getResources());
+        board[1][7] = new Knight(1, 7, Piece.WHITE, getResources());
+        board[2][7] = new Bishop(2, 7, Piece.WHITE, getResources());
+        board[3][7] = new Queen(3, 7, Piece.WHITE, getResources());
+        board[4][7] = new King(4, 7, Piece.WHITE, getResources());
+        board[5][7] = new Bishop(5, 7, Piece.WHITE, getResources());
+        board[6][7] = new Knight(6, 7, Piece.WHITE, getResources());
+        board[7][7] = new Rook(7, 7, Piece.WHITE, getResources());
+
+        board[0][6] = new Pawn(0, 6, Piece.WHITE, getResources());
+        board[1][6] = new Pawn(1, 6, Piece.WHITE, getResources());
+        board[2][6] = new Pawn(2, 6, Piece.WHITE, getResources());
+        board[3][6] = new Pawn(3, 6, Piece.WHITE, getResources());
+        board[4][6] = new Pawn(4, 6, Piece.WHITE, getResources());
+        board[5][6] = new Pawn(5, 6, Piece.WHITE, getResources());
+        board[6][6] = new Pawn(6, 6, Piece.WHITE, getResources());
+        board[7][6] = new Pawn(7, 6, Piece.WHITE, getResources());
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float x = event.getX()/squareSize;
+        float y = event.getY()/squareSize;
+        if(selectedPiece == null)
+        {
+            if(board[(int)x][(int)y].getColor()==0 && whiteTurn)
+                selectedPiece = board[(int)x][(int)y];
+            if(board[(int)x][(int)y].getColor()==1 && !whiteTurn)
+                selectedPiece = board[(int)x][(int)y];
+        }
+        else
+        {
+            if(board[(int)x][(int)y] == null && selectedPiece.isValidPath((int)x,(int)y,board))
+            {
+                selectedPiece.x = (int)x;
+                selectedPiece.y = (int)y;
+                selectedPiece = null;
+            }
+            else if(board[(int)x][(int)y] == null && !selectedPiece.isValidPath((int)x,(int)y,board))
+            {
+                selectedPiece =null;
+            }
+            else if(board[(int)x][(int)y].getColor()==selectedPiece.getColor())
+            {
+                selectedPiece = board[(int)x][(int)y];
+            }
+            else if(board[(int)x][(int)y].getColor()!=selectedPiece.getColor())
+            {
+                if(selectedPiece.isValidPath((int)x,(int)y,board))
+                {
+                    selectedPiece.x = (int)x;
+                    selectedPiece.y = (int)y;
+                    board[(int)x][(int)y] = selectedPiece;
+                    selectedPiece = null;
+                }
+                else
+                {
+                    selectedPiece = null;
+                }
+            }
+        }
+        return super.onTouchEvent(event);
+    }
+
     protected void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
@@ -55,12 +139,6 @@ public class GameView extends View
                 float right = j * squareSize + squareSize;
                 float bottom = i * squareSize + squareSize;
                 canvas.drawRect(left, top, right, bottom, squareColor);
-
-                //Draw pieces
-                if (board[i][j] != null) {
-                    board[i][j].draw(canvas);
-                }
-
                 // Alternate colors for squares
                 if (squareColor.getColor() == lightBrown) {
                     squareColor.setColor(darkBrown);
@@ -74,7 +152,16 @@ public class GameView extends View
                 squareColor.setColor(lightBrown);
             }
         }
-
+        for(int i=0;i<8;i++)
+        {
+            for(int j =0;j<8;j++)
+            {
+                //Draw pieces
+                if (board[i][j] != null) {
+                    board[i][j].draw(canvas);
+                }
+            }
+        }
 //        Rect Rect1 = new Rect();
 //        Rect1.set(0, 0, canvas.getWidth()/8,canvas.getHeight()/8);
 //        Rect Rect2 = new Rect();

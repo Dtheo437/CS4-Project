@@ -16,12 +16,13 @@ public class Pawn extends Piece
 {
     private Bitmap bp;
     private Bitmap wp;
+    private boolean firstMove;
     Type type;
-    public Pawn(int x, int y, int color, Boolean firstMove, Resources res)
+    public Pawn(int x, int y, int color, Resources res)
     {
         super(x,y,color);
         type = Type.PAWN;
-        firstMove=true;
+        firstMove = true;
         bp = BitmapFactory.decodeResource(res,R.drawable.bp);
         wp = BitmapFactory.decodeResource(res, R.drawable.wp);
     }
@@ -29,7 +30,10 @@ public class Pawn extends Piece
     {
         return Type.PAWN;
     }
-
+    public int getColor()
+    {
+        return this.color;
+    }
     @Override
     public void draw(Canvas canvas) {
         if(color == 0)
@@ -55,11 +59,11 @@ public class Pawn extends Piece
         }
     }
 
-    public boolean isValidPath(int finalX, int finalY)
+    public boolean isValidPath(int finalX, int finalY,Piece[][] board)
     {
         int ydif = (finalY - this.y);
-        //if(this.firstMove && ydif==2)
-         //   return true;
+        if(this.firstMove && ydif==2)
+            return true;
         if((ydif==1))
             return true;
         return false;

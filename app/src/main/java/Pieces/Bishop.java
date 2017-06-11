@@ -32,6 +32,10 @@ public class Bishop extends Piece
     {
         return Type.BISHOP;
     }
+    public int getColor()
+    {
+        return this.color;
+    }
     public boolean isValidPath(int finalX, int finalY, Piece[][] board)
     {
         int xdif = Math.abs(finalX - this.x);
