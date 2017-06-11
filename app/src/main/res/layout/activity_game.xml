@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     tools:context="com.example.aj.chessapp.Game">
 
+    <com.example.aj.chessapp.GameView android:id="@+id/board"
+        android:layout_height="@dimen/board_size"
+        android:layout_width="@dimen/board_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.496"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
