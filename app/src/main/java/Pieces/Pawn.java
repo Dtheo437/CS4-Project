@@ -74,10 +74,23 @@ public class Pawn extends Piece
         if(ydif == 1 && xdif != 1){
             return false;
         }
-        else if(ydif == 1 && xdif == 1){
+        else if(ydif == 1 && xdif == 1 && this.color == Piece.WHITE){
+            tempx = this.x;
             if (board[finalX][finalY].color == this.color){
                 return false;
             }
+            else if(finalX > tempx)
+                return false;
+            else
+                return true;
+        }
+        else if(ydif == 1 && xdif == 1 && this.color == Piece.BLACK){
+            tempx = this.x;
+            if (board[finalX][finalY].color == this.color){
+                return false;
+            }
+            else if(finalX < tempx)
+                return false;
             else
                 return true;
         }
@@ -117,6 +130,7 @@ public class Pawn extends Piece
                 if (board[finalX][finalY] != null) {
                     return false;
                 }
+                firstMove = false;
                 return true;
             }
             return false;
@@ -127,6 +141,7 @@ public class Pawn extends Piece
                 if (board[finalX][finalY] != null) {
                     return false;
                 }
+                firstMove = false;
                 return true;
             }
             return false;
