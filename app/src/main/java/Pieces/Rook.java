@@ -1,4 +1,5 @@
-//FIX
+//Seems FIXed
+//Somewhere in the isvalidpath it changes the values of x and y - Should be fixed -created temp value
 package Pieces;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -63,59 +64,65 @@ public class Rook extends Piece
     }
     public boolean isValidPath(int finalX, int finalY, Piece [][] board)
     {
+        int tempx;
+        int tempy;
         int xdif = Math.abs(finalX - this.x);
         int ydif = Math.abs(finalY - this.y);
         if(xdif<=7 && ydif ==0){
             if (finalX > this.x) {
-                while (finalX != this.x) {
-                    if (board[this.x + 1][this.y] != null) {
-                        if (this.color == board[this.x + 1][this.y].color) {
+                tempx=this.x; tempy=this.y;
+                while (finalX != tempx) {
+                    if (board[tempx + 1][tempy] != null) {
+                        if (this.color == board[tempx + 1][tempy].color) {
                             return false;
                         }
                         else
-                            finalX = this.x+1;
+                            finalX = tempx+1;
                     }
-                    this.x++;
+                    tempx++;
                 }
                 return true;
             }
             else if (finalX < this.x) {
-                while (finalX != this.x) {
-                    if (board[this.x - 1][this.y] != null) {
-                        if (this.color == board[this.x - 1][this.y].color) {
+                tempx=this.x; tempy=this.y;
+                while (finalX != tempx) {
+                    if (board[tempx - 1][tempy] != null) {
+                        if (this.color == board[tempx - 1][tempy].color) {
                             return false;
                         }
                         else
-                            finalX = this.x-1;
+                            finalX = tempx-1;
                     }
-                    this.x--;
+                    tempx--;
                 }
                 return true;
             }
         }
         else if (xdif==0 && ydif<=7){
             if (finalY > this.y) {
-                while (finalY != this.y) {
-                    if (board[this.x][this.y+1] != null) {
-                        if (this.color == board[this.x][this.y + 1].color) {
+                tempx=this.x; tempy=this.y;
+                while (finalY != tempy) {
+                    if (board[tempx][tempy+1] != null) {
+                        if (this.color == board[tempx][tempy + 1].color) {
                             return false;
                         } else
-                            finalY = this.y+1;
+                            finalY = tempy+1;
                     }
-                    this.y++;
+                    tempy++;
                 }
                 return true;
             }
             else if (finalY < this.y) {
-                while (finalY != this.y) {
-                    if (board[this.x][this.y - 1] != null) {
-                        if (this.color == board[this.x][this.y - 1].color) {
+                tempx=this.x; tempy=this.y;
+                while (finalY != tempy) {
+                    if (board[tempx][tempy - 1] != null) {
+                        if (this.color == board[tempx][tempy - 1].color) {
                             return false;
                         }
                         else
-                            finalY = this.y-1;
+                            finalY = tempy-1;
                     }
-                    this.y--;
+                    tempy--;
                 }
                 return true;
             }

@@ -1,4 +1,7 @@
 //FUCKED UP
+//SET FIRST MOVE TO FALSE IN ISVALIDPATH METHOD
+//Somewhere in the isvalidpath it changes the values of x and y - Should be fixed -created temp value
+//4 outside pawns wont move
 package Pieces;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -62,43 +65,71 @@ public class Pawn extends Piece
     }
     public boolean isValidPath(int finalX, int finalY, Piece [][] board)
     {
+        Log.i("DEBUG", "Pawn , this.x: " + this.x + " this.y: " + this.y);
+        Log.i("DEBUG", "Pawn , finalX: " + finalX + " finalY: " + finalY);
         int ydif = Math.abs(finalY - this.y);
         int xdif = Math.abs(finalX - this.x);
+        int tempx;
+        int tempy;
         if(ydif == 1 && xdif != 1){
             return false;
         }
         else if(ydif == 1 && xdif == 1){
-            if (board[finalY][finalX].color == this.color){
+            if (board[finalX][finalY].color == this.color){
                 return false;
             }
             else
                 return true;
         }
-        else if(this.firstMove && xdif == 2 && ydif == 0){
-            if(finalX > this.x){
-                while(this.x != finalX) {
-                    if(board[this.y][this.x+1] != null){
+        else if(this.firstMove && xdif == 2 && ydif == 0 && this.color == Piece.WHITE){
+            //Move White Pawn forward 2
+            tempx = this.x;
+            tempy = this.y;
+            if(finalX < tempx){
+                while(tempx != finalX) {
+                    if(board[tempx-1][tempy] != null){
                         return false;
                     }
-                    this.x++;
+                    tempx--;
                 }
-                return true;
-            }
-            if(finalX < this.x){
-                while(this.x != finalX) {
-                    if(board[this.y][this.x-1] != null){
-                        return false;
-                    }
-                    this.x--;
-                }
+                firstMove = false;
                 return true;
             }
         }
-        if((xdif == 1 && ydif == 0)) {
-            if (board[finalY][finalX] != null) {
-                return false;
+        else if(this.firstMove && xdif == 2 && ydif == 0 && this.color == Piece.BLACK){
+            //Move Black Pawn forward 2
+            tempx = this.x;
+            tempy = this.y;
+            if(finalX > tempx){
+                while(tempx != finalX) {
+                    if(board[tempx+1][tempy] != null){
+                        return false;
+                    }
+                    tempx++;
+                }
+                firstMove = false;
+                return true;
             }
-            return true;
+        }
+        if((xdif == 1 && ydif == 0) && this.color == Piece.WHITE) {
+            //White Forward 1
+            if(finalX<this.x) {
+                if (board[finalX][finalY] != null) {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+        if((xdif == 1 && ydif == 0) && this.color == Piece.BLACK) {
+            //Black Forward 1
+            if(finalX>this.x) {
+                if (board[finalX][finalY] != null) {
+                    return false;
+                }
+                return true;
+            }
+            return false;
         }
         else
             return false;

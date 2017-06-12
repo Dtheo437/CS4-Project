@@ -1,3 +1,7 @@
+//Should Work now
+//Error - Parameters FinalX and FinalY were switched - Unknown Wont move right now - Should be fixed
+//Error in movement checking - Fixed
+//Somewhere in the isvalidpath it changes the values of x and y - Should be fixed -created temp value
 package Pieces;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -58,57 +62,80 @@ public class King extends Piece
             canvas.drawBitmap(bk, src, dst, p);
         }
     }
-    public boolean isValidPath(int finalY, int finalX, Piece [][] board)
+    public boolean isValidPath(int finalX, int finalY, Piece [][] board)
     {
-        int xdif = Math.abs(finalX - this.x);
-        int ydif = Math.abs(finalY - this.y);
+        int tempx;
+        int tempy;
+        Log.i("DEBUG","KING CLASS: FinalX : " + finalX + " this.x : " + this.x);
+        Log.i("DEBUG","KING CLASS: FinalY : " + finalY + " this.y : " + this.y);
+        int xdif = Math.abs(this.x - finalX);
+        int ydif = Math.abs(this.y - finalY);
+//        Log.i("DEBUG","KING CLASS: xdif: " + xdif);
+//        Log.i("DEBUG","KING CLASS: ydif: " + ydif);
         if(ydif<=1 && xdif <= 1){
+//            Log.i("DEBUG","KING CLASS: Test Entry");
             if (finalY > this.y && finalX > this.x){
-                if(board[this.y+1][this.x+1] != null && board[this.y+1][this.x+1].color == this.color){
+                tempx=this.x+1; tempy=this.y+1;
+                if(board[tempx][tempy] != null && board[tempx][tempy].color == this.color){
                     return false;
                 }
+                Log.i("DEBUG","KING CLASS: Down, Right");//-Definitely Works
                 return true;
             }
             else if (finalY < this.y && finalX < this.x){
-                if(board[this.y-1][this.x-1] != null && board[this.y-1][this.x-1].color == this.color){
+                tempx=this.x-1; tempy=this.y-1;
+                if(board[tempx][tempy] != null && board[tempx][tempy].color == this.color){
                     return false;
                 }
+                Log.i("DEBUG","KING CLASS: Up, Left"); //- Definitely Works
                 return true;
             }
             else if (finalY > this.y && finalX < this.x){
-                if(board[this.y+1][this.x-1] != null && board[this.y+1][this.x-1].color == this.color){
+                tempx=this.x-1; tempy=this.y+1;
+                if(board[tempx][tempy] != null && board[tempx][tempy].color == this.color){
                     return false;
                 }
+                Log.i("DEBUG","KING CLASS: Up, Right"); //- Definitely Works
                 return true;
             }
             else if (finalY < this.y && finalX > this.x){
-                if(board[this.y-1][this.x+1] != null && board[this.y-1][this.x+1].color == this.color){
+                tempx=this.x+1; tempy=this.y-1;
+                if(board[tempx][tempy] != null && board[tempx][tempy].color == this.color){
                     return false;
                 }
+                Log.i("DEBUG","KING CLASS: Down, Left");//-Definitely Works
                 return true;
             }
             else if (finalY == this.y && finalX > this.x){
-                if(board[this.y][this.x+1] != null && board[this.y][this.x+1].color == this.color){
+                tempx=this.x+1; tempy=this.y;
+                if(board[tempy][tempx] != null && board[tempy][tempx].color == this.color){
                     return false;
                 }
+                Log.i("DEBUG","KING CLASS: Down");
                 return true;
             }
             else if (finalY == this.y && finalX < this.x){
-                if(board[this.y][this.x-1] != null && board[this.y][this.x-1].color == this.color){
+                tempx=this.x-1; tempy=this.y;
+                if(board[tempy][tempx] != null && board[tempy][tempx].color == this.color){
                     return false;
                 }
+                Log.i("DEBUG","KING CLASS: Up");
                 return true;
             }
             else if (finalY > this.y && finalX == this.x){
-                if(board[this.y+1][this.x] != null && board[this.y+1][this.x].color == this.color){
+                tempx=this.x; tempy=this.y+1;
+                if(board[tempy][tempx] != null && board[tempy][tempx].color == this.color){
                     return false;
                 }
+                Log.i("DEBUG","KING CLASS: Right");
                 return true;
             }
             else if (finalY < this.y && finalX == this.x){
-                if(board[this.y-1][this.x] != null && board[this.y-1][this.x].color == this.color){
+                tempx=this.x; tempy=this.y-1;
+                if(board[tempy][tempx] != null && board[tempy][tempx].color == this.color){
                     return false;
                 }
+                Log.i("DEBUG","KING CLASS: Left");
                 return true;
             }
         }

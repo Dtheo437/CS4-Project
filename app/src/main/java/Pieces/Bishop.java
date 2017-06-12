@@ -1,4 +1,6 @@
-//UNKNOWN ERROR
+//UNKNOWN ERROR - Values are incorrect
+//Somewhere in the isvalidpath it changes the values of x and y - Should be fixed -created temp value
+//errror (0,6) - (1,7)
 package Pieces;
 import android.app.Application;
 import android.content.res.Resources;
@@ -43,66 +45,87 @@ public class Bishop extends Piece
     }
     public boolean isValidPath(int finalX, int finalY, Piece[][] board)
     {
+        int tempx;
+        int tempy;
+        Log.i("DEBUG", "Bishop , this.x: " + this.x + " this.y: " + this.y);
+        Log.i("DEBUG", "Bishop , finalX: " + finalX + " finalY: " + finalY);
         int xdif = Math.abs(finalX - this.x);
         int ydif = Math.abs(finalY - this.y);
         if (finalY > this.y && finalX > this.x){
-            while (this.y != finalY && this.x != finalX){
-                if (board[this.y+1][this.x+1] != null){
-                    if (this.color == board[this.y+1][this.x+1].color){
+            //down right W
+            tempx=this.x; tempy=this.y;
+            while (tempy != finalY && tempx != finalX){
+                if (board[tempx+1][tempy+1] != null){
+                    //down right W
+                    if (this.color == board[tempy+1][tempx+1].color){
                         return false;
                     }
-                    else {
-                        finalY = this.y+1;
-                        finalX = this.x+1;
+                    else if(tempy+1 == finalY && tempx+1 == finalX){
+                        return true;
                     }
+                    else
+                        return false;
                 }
-                this.y++;
-                this.x++;
+                tempy++;
+                tempx++;
             }
             return true;
         }
         else if(finalY < this.y && finalX < this.x){
-            while (this.y != finalY && this.x != finalX){
-                if (board[this.y-1][this.x-1] != null){
-                    if (this.color == board[this.y-1][this.x-1].color){
+            //Up Left W
+            tempx=this.x; tempy=this.y;
+            while (tempy != finalY && tempx != finalX){
+                //Up Left W
+                if (board[tempx-1][tempy-1] != null){
+                    if (this.color == board[tempx-1][tempy-1].color){
                         return false;
                     }
-                    else {
-                        finalY = this.y-1;
-                        finalX = this.x-1;
+                    else if(tempy-1 == finalY && tempx-1 == finalX){
+                        return true;
                     }
+                    else
+                        return false;
                 }
-                this.y--;
-                this.x--;
+                tempy--;
+                tempx--;
             }
             return true;
         }
         else if(finalY > this.y && finalX < this.x){
-            while (this.y != finalY && this.x != finalX){
-                if (board[this.y+1][this.x-1] != null){
-                    if (this.color == board[this.y+1][this.x-1].color){
+            //Up Right W
+            Log.i("DEBUG", "Bishop Up Right W");
+            tempx=this.x; tempy=this.y;
+            while (tempy != finalY && tempx != finalX){
+                //Up Right W
+                if (board[tempx-1][tempy+1] != null){
+                    if (this.color == board[tempx-1][tempy+1].color){
                         return false;
                     }
-                    else {
-                        finalY = this.y+1;
-                        finalX = this.x-1;
+                    if((tempy+1 == finalY) && (tempx-1 == finalX)){
+                        return true;
                     }
+                    else
+                        return false;
                 }
-                this.y++;
-                this.x--;
+                tempy++;
+                tempx--;
             }
             return true;
         }
         else if(finalY < this.y && finalX > this.x){
-            while (this.y != finalY && this.x != finalX){
-                if (board[this.y-1][this.x+1] != null){
-                    if (this.color == board[this.y-1][this.x+1].color){
+            //down left w
+            tempx=this.x; tempy=this.y;
+            while (tempy != finalY && tempx != finalX){
+                //down left w
+                if (board[tempx+1][tempy-1] != null){
+                    if (this.color == board[tempx+1][tempy-1].color){
                         return false;
                     }
-                    else {
-                        finalX = this.y-1;
-                        finalY = this.x+1;
+                    else if(tempy-1 == finalY && tempx+1 == finalX){
+                        return true;
                     }
+                    else
+                        return false;
                 }
                 this.y--;
                 this.x++;

@@ -1,4 +1,5 @@
-//Fix
+//Errors seem Fixed
+//Somewhere in the isvalidpath it changes the values of x and y - Should be fixed -created temp value
 package Pieces;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -7,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
-
 import com.example.aj.chessapp.*;
 /**
  * Created by AJ on 6/5/2017.
@@ -60,59 +60,65 @@ public class Queen extends Piece
     }
     public boolean isValidPath(int finalX, int finalY, Piece [][] board)
     {
+        int tempx;
+        int tempy;
         int xdif = Math.abs(finalX - this.x);
         int ydif = Math.abs(finalY - this.y);
         if(xdif<=7 && ydif ==0){
             if (finalX > this.x) {
-                while (finalX != this.x) {
-                    if (board[this.x + 1][this.y] != null) {
-                        if (this.color == board[this.x + 1][this.y].color) {
+                tempx=this.x; tempy=this.y;
+                while (finalX != tempx) {
+                    if (board[tempx + 1][tempy] != null) {
+                        if (this.color == board[tempx + 1][tempy].color) {
                             return false;
                         }
                         else
-                            finalX = this.x+1;
+                            finalX = tempx+1;
                     }
-                    this.x++;
+                    tempx++;
                 }
                 return true;
             }
             else if (finalX < this.x) {
-                while (finalX != this.x) {
-                    if (board[this.x - 1][this.y] != null) {
-                        if (this.color == board[this.x - 1][this.y].color) {
+                tempx=this.x; tempy=this.y;
+                while (finalX != tempx) {
+                    if (board[tempx - 1][tempy] != null) {
+                        if (this.color == board[tempx - 1][tempy].color) {
                             return false;
                         }
                         else
-                            finalX = this.x-1;
+                            finalX = tempx-1;
                     }
-                    this.x--;
+                    tempx--;
                 }
                 return true;
             }
         }
         else if (xdif==0 && ydif<=7){
             if (finalY > this.y) {
-                while (finalY != this.y) {
-                    if (board[this.x][this.y+1] != null) {
-                        if (this.color == board[this.x][this.y + 1].color) {
+                tempx=this.x; tempy=this.y;
+                while (finalY != tempy) {
+                    if (board[tempx][tempy+1] != null) {
+                        if (this.color == board[tempx][tempy + 1].color) {
                             return false;
                         } else
-                            finalY = this.y+1;
+                            finalY = tempy+1;
                     }
-                    this.y++;
+                    tempy++;
                 }
                 return true;
             }
             else if (finalY < this.y) {
-                while (finalY != this.y) {
-                    if (board[this.x][this.y - 1] != null) {
-                        if (this.color == board[this.x][this.y - 1].color) {
+                tempx=this.x; tempy=this.y;
+                while (finalY != tempy) {
+                    if (board[tempx][tempy - 1] != null) {
+                        if (this.color == board[tempx][tempy - 1].color) {
                             return false;
                         }
                         else
-                            finalY = this.y-1;
+                            finalY = tempy-1;
                     }
-                    this.y--;
+                    tempy--;
                 }
                 return true;
             }
@@ -121,66 +127,70 @@ public class Queen extends Piece
         }
         else if (xdif == ydif){
             if (finalX > this.x && finalY > this.y){
-                while (this.x != finalX && this.y != finalY){
-                    if (board[this.x+1][this.y+1] != null){
-                        if (this.color == board[this.x+1][this.y+1].color){
+                tempx=this.x; tempy=this.y;
+                while (tempx != finalX && tempy != finalY){
+                    if (board[tempx+1][tempy+1] != null){
+                        if (this.color == board[tempx+1][tempy+1].color){
                             return false;
                         }
                         else {
-                            finalX = this.x+1;
-                            finalY = this.y+1;
+                            finalX = tempx+1;
+                            finalY = tempy+1;
                         }
                     }
-                    this.x++;
-                    this.y++;
+                    tempx++;
+                    tempy++;
                 }
                 return true;
             }
             else if(finalX < this.x && finalY < this.y){
-                while (this.x != finalX && this.y != finalY){
-                    if (board[this.x-1][this.y-1] != null){
-                        if (this.color == board[this.x-1][this.y-1].color){
+                tempx=this.x; tempy=this.y;
+                while (tempx != finalX && tempy != finalY){
+                    if (board[tempx-1][tempy-1] != null){
+                        if (this.color == board[tempx-1][tempy-1].color){
                             return false;
                         }
                         else {
-                            finalX = this.x-1;
-                            finalY = this.y-1;
+                            finalX = tempx-1;
+                            finalY = tempy-1;
                         }
                     }
-                    this.x--;
-                    this.y--;
+                    tempx--;
+                    tempy--;
                 }
                 return true;
             }
             else if(finalX > this.x && finalY < this.y){
-                while (this.x != finalX && this.y != finalY){
-                    if (board[this.x+1][this.y-1] != null){
-                        if (this.color == board[this.x+1][this.y-1].color){
+                tempx=this.x; tempy=this.y;
+                while (tempx != finalX && tempy != finalY){
+                    if (board[tempx+1][tempy-1] != null){
+                        if (this.color == board[tempx+1][tempy-1].color){
                             return false;
                         }
                         else {
-                            finalX = this.x+1;
-                            finalY = this.y-1;
+                            finalX = tempx+1;
+                            finalY = tempy-1;
                         }
                     }
-                    this.x++;
-                    this.y--;
+                    tempx++;
+                    tempy--;
                 }
                 return true;
             }
             else if(finalX < this.x && finalY > this.y){
-                while (this.x != finalX && this.y != finalY){
-                    if (board[this.x-1][this.y+1] != null){
-                        if (this.color == board[this.x-1][this.y+1].color){
+                tempx=this.x; tempy=this.y;
+                while (tempx != finalX && tempy != finalY){
+                    if (board[tempx-1][tempy+1] != null){
+                        if (this.color == board[tempx-1][tempy+1].color){
                             return false;
                         }
                         else {
-                            finalX = this.x-1;
-                            finalY = this.y+1;
+                            finalX = tempx-1;
+                            finalY = tempy+1;
                         }
                     }
-                    this.x--;
-                    this.y++;
+                    tempx--;
+                    tempy++;
                 }
                 return true;
             }

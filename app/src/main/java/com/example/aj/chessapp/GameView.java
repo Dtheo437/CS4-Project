@@ -1,3 +1,4 @@
+//Implement a pawn conversion
 package com.example.aj.chessapp;
 
 import android.graphics.*;
@@ -83,19 +84,24 @@ public class GameView extends View
         float row = event.getY()/squareSize;
         if(selectedPiece == null)
         {
-            if(board[(int)row][(int)col].getColor()==Piece.WHITE && whiteTurn)
-                selectedPiece = board[(int)row][(int)col];
-            if(board[(int)row][(int)col].getColor()==Piece.BLACK && !whiteTurn)
-                selectedPiece = board[(int)row][(int)col];
-            Log.i("DEBUG", selectedPiece.toString());
+            if(board[(int)row][(int)col] != null)
+            {
+                if(board[(int)row][(int)col].getColor()==Piece.WHITE && whiteTurn)
+                    selectedPiece = board[(int)row][(int)col];
+                if(board[(int)row][(int)col].getColor()==Piece.BLACK && !whiteTurn)
+                    selectedPiece = board[(int)row][(int)col];
+                Log.i("DEBUG","SP NULL" + selectedPiece.toString());
+            }
         }
         else
         {
             if(board[(int)row][(int)col] == null && selectedPiece.isValidPath((int)row,(int)col,board))
             {
-                Log.i("DEBUG", " " + selectedPiece.x);
-                Log.i("DEBUG", " " + selectedPiece.y);
+                Log.i("DEBUG", "Valid Path " + selectedPiece.x);
+                Log.i("DEBUG", "Valid Path " + selectedPiece.y);
                 board[selectedPiece.x][selectedPiece.y] =null;
+                if(board[selectedPiece.x][selectedPiece.y] ==null)
+                    Log.i("DEBUG", "Null at " + "x: " + selectedPiece.x +" y: " + selectedPiece.y);
                 selectedPiece.x = (int)row;
                 selectedPiece.y = (int)col;
                 board[(int)row][(int)col] = selectedPiece;
@@ -104,19 +110,21 @@ public class GameView extends View
             }
             else if(board[(int)row][(int)col] == null && !selectedPiece.isValidPath((int)row,(int)col,board))
             {
+                Log.i("DEBUG", "Invalid Path " + selectedPiece.toString());
                 selectedPiece =null;
                 //((TextView)findViewById(R.id.Location)).setText("Invalid Move"); - doesnt work
             }
             else if(board[(int)row][(int)col].getColor()==selectedPiece.getColor())
             {
                 selectedPiece = board[(int)row][(int)col];
+                Log.i("DEBUG", "New SelectedPiece " + selectedPiece.toString());
             }
             else if(board[(int)row][(int)col].getColor()!=selectedPiece.getColor())
             {
                 if(selectedPiece.isValidPath((int)row,(int)col,board))
                 {
-                    Log.i("DEBUG", " " + selectedPiece.x);
-                    Log.i("DEBUG", " " + selectedPiece.y);
+                    Log.i("DEBUG", "Take Piece " + selectedPiece.x);
+                    Log.i("DEBUG", "Take Piece " + selectedPiece.y);
                     board[selectedPiece.x][selectedPiece.y] =null;
                     selectedPiece.x = (int)row;
                     selectedPiece.y = (int)col;
@@ -126,6 +134,7 @@ public class GameView extends View
                 }
                 else
                 {
+                    Log.i("DEBUG", "Invalid Path - Take" + selectedPiece.toString());
                     selectedPiece = null;
                 }
             }
