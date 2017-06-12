@@ -51,7 +51,10 @@ public class Bishop extends Piece
         Log.i("DEBUG", "Bishop , finalX: " + finalX + " finalY: " + finalY);
         int xdif = Math.abs(finalX - this.x);
         int ydif = Math.abs(finalY - this.y);
-        if (finalY > this.y && finalX > this.x){
+        if (xdif != ydif){
+            return false;
+        }
+        else if (finalY > this.y && finalX > this.x){
             //down right W
             tempx=this.x; tempy=this.y;
             while (tempy != finalY && tempx != finalX){
