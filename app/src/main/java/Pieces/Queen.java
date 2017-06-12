@@ -1,3 +1,4 @@
+//Fix
 package Pieces;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -31,6 +32,9 @@ public class Queen extends Piece
     public int getColor()
     {
         return this.color;
+    }
+    public String toString() {
+        return type.name() + ": " + this.x + ", " + this.y;
     }
     @Override
     public void draw(Canvas canvas) {

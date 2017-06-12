@@ -1,3 +1,4 @@
+//FUCKED UP
 package Pieces;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -34,6 +35,9 @@ public class Pawn extends Piece
     {
         return this.color;
     }
+    public String toString() {
+        return type.name() + ": " + this.x + ", " + this.y;
+    }
     @Override
     public void draw(Canvas canvas) {
         if(color == 0)
@@ -60,38 +64,38 @@ public class Pawn extends Piece
     {
         int ydif = Math.abs(finalY - this.y);
         int xdif = Math.abs(finalX - this.x);
-        if(xdif == 1 && ydif != 1){
+        if(ydif == 1 && xdif != 1){
             return false;
         }
-        else if(xdif == 1 && ydif == 1){
-            if (board[finalX][finalY].color == this.color){
+        else if(ydif == 1 && xdif == 1){
+            if (board[finalY][finalX].color == this.color){
                 return false;
             }
             else
                 return true;
         }
-        else if(this.firstMove && ydif == 2 && xdif == 0){
-            if(finalY > this.y){
-                while(this.y != finalY) {
-                    if(board[this.x][this.y+1] != null){
+        else if(this.firstMove && xdif == 2 && ydif == 0){
+            if(finalX > this.x){
+                while(this.x != finalX) {
+                    if(board[this.y][this.x+1] != null){
                         return false;
                     }
-                    this.y++;
+                    this.x++;
                 }
                 return true;
             }
-            if(finalY < this.y){
-                while(this.y != finalY) {
-                    if(board[this.x][this.y-1] != null){
+            if(finalX < this.x){
+                while(this.x != finalX) {
+                    if(board[this.y][this.x-1] != null){
                         return false;
                     }
-                    this.y--;
+                    this.x--;
                 }
                 return true;
             }
         }
-        if((ydif == 1 && xdif == 0)) {
-            if (board[finalX][finalY] != null) {
+        if((xdif == 1 && ydif == 0)) {
+            if (board[finalY][finalX] != null) {
                 return false;
             }
             return true;

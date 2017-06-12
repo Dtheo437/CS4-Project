@@ -1,3 +1,4 @@
+//PERFECT!!!!!
 package Pieces;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -17,9 +18,9 @@ public class Knight extends Piece
     private Bitmap bkn;
     private Bitmap wkn;
     Type type;
-    public Knight(int x, int y, int color, Resources res)
+    public Knight(int col, int row, int color, Resources res)
     {
-        super(x,y,color);
+        super(col,row,color);
         type = Type.KNIGHT;
         bkn = BitmapFactory.decodeResource(res, R.drawable.bkn);
         wkn = BitmapFactory.decodeResource(res, R.drawable.wkn);
@@ -66,5 +67,9 @@ public class Knight extends Piece
         if((xdif == 2 && ydif==1) || (xdif == 1 && ydif==2))
             return true;
         return false;
+    }
+
+    public String toString() {
+        return type.name() + ": " + this.x + ", " + this.y;
     }
 }

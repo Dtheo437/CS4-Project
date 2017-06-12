@@ -76,42 +76,52 @@ public class GameView extends View
         board[6][6] = new Pawn(6, 6, Piece.WHITE, getResources());
         board[6][7] = new Pawn(6, 7, Piece.WHITE, getResources());
     }
-/*
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX()/squareSize;
-        float y = event.getY()/squareSize;
-        //(TextView)findViewById(R.id.Location).setText
+        float col = event.getX()/squareSize;
+        float row = event.getY()/squareSize;
         if(selectedPiece == null)
         {
-            if(board[(int)x][(int)y].getColor()==Piece.WHITE && whiteTurn)
-                selectedPiece = board[(int)y][(int)x];
-            if(board[(int)x][(int)y].getColor()==Piece.BLACK && !whiteTurn)
-                selectedPiece = board[(int)y][(int)x];
+            if(board[(int)row][(int)col].getColor()==Piece.WHITE && whiteTurn)
+                selectedPiece = board[(int)row][(int)col];
+            if(board[(int)row][(int)col].getColor()==Piece.BLACK && !whiteTurn)
+                selectedPiece = board[(int)row][(int)col];
+            Log.i("DEBUG", selectedPiece.toString());
         }
         else
         {
-            if(board[(int)x][(int)y] == null && selectedPiece.isValidPath((int)x,(int)y,board))
+            if(board[(int)row][(int)col] == null && selectedPiece.isValidPath((int)row,(int)col,board))
             {
-                selectedPiece.x = (int)x;
-                selectedPiece.y = (int)y;
+                Log.i("DEBUG", " " + selectedPiece.x);
+                Log.i("DEBUG", " " + selectedPiece.y);
+                board[selectedPiece.x][selectedPiece.y] =null;
+                selectedPiece.x = (int)row;
+                selectedPiece.y = (int)col;
+                board[(int)row][(int)col] = selectedPiece;
+                Log.i("DEBUG", selectedPiece.toString());
                 selectedPiece = null;
             }
-            else if(board[(int)x][(int)y] == null && !selectedPiece.isValidPath((int)x,(int)y,board))
+            else if(board[(int)row][(int)col] == null && !selectedPiece.isValidPath((int)row,(int)col,board))
             {
                 selectedPiece =null;
+                //((TextView)findViewById(R.id.Location)).setText("Invalid Move"); - doesnt work
             }
-            else if(board[(int)x][(int)y].getColor()==selectedPiece.getColor())
+            else if(board[(int)row][(int)col].getColor()==selectedPiece.getColor())
             {
-                selectedPiece = board[(int)x][(int)y];
+                selectedPiece = board[(int)row][(int)col];
             }
-            else if(board[(int)x][(int)y].getColor()!=selectedPiece.getColor())
+            else if(board[(int)row][(int)col].getColor()!=selectedPiece.getColor())
             {
-                if(selectedPiece.isValidPath((int)x,(int)y,board))
+                if(selectedPiece.isValidPath((int)row,(int)col,board))
                 {
-                    selectedPiece.x = (int)x;
-                    selectedPiece.y = (int)y;
-                    board[(int)x][(int)y] = selectedPiece;
+                    Log.i("DEBUG", " " + selectedPiece.x);
+                    Log.i("DEBUG", " " + selectedPiece.y);
+                    board[selectedPiece.x][selectedPiece.y] =null;
+                    selectedPiece.x = (int)row;
+                    selectedPiece.y = (int)col;
+                    board[(int)row][(int)col] = selectedPiece;
+                    Log.i("DEBUG", selectedPiece.toString());
                     selectedPiece = null;
                 }
                 else
@@ -120,9 +130,10 @@ public class GameView extends View
                 }
             }
         }
+        this.invalidate();
         return super.onTouchEvent(event);
     }
-*/
+
     protected void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);

@@ -1,3 +1,4 @@
+//UNKNOWN ERROR
 package Pieces;
 import android.app.Application;
 import android.content.res.Resources;
@@ -10,6 +11,7 @@ import android.util.Log;
 
 import com.example.aj.chessapp.*;
 
+import static com.example.aj.chessapp.R.drawable.abc_text_select_handle_left_mtrl_dark;
 import static com.example.aj.chessapp.R.drawable.bb;
 
 /**
@@ -36,71 +38,74 @@ public class Bishop extends Piece
     {
         return this.color;
     }
+    public String toString() {
+        return type.name() + ": " + this.x + ", " + this.y;
+    }
     public boolean isValidPath(int finalX, int finalY, Piece[][] board)
     {
         int xdif = Math.abs(finalX - this.x);
         int ydif = Math.abs(finalY - this.y);
-        if (finalX > this.x && finalY > this.y){
-            while (this.x != finalX && this.y != finalY){
-                if (board[this.x+1][this.y+1] != null){
-                    if (this.color == board[this.x+1][this.y+1].color){
+        if (finalY > this.y && finalX > this.x){
+            while (this.y != finalY && this.x != finalX){
+                if (board[this.y+1][this.x+1] != null){
+                    if (this.color == board[this.y+1][this.x+1].color){
                         return false;
                     }
                     else {
-                        finalX = this.x+1;
                         finalY = this.y+1;
-                    }
-                }
-                this.x++;
-                this.y++;
-            }
-            return true;
-        }
-        else if(finalX < this.x && finalY < this.y){
-            while (this.x != finalX && this.y != finalY){
-                if (board[this.x-1][this.y-1] != null){
-                    if (this.color == board[this.x-1][this.y-1].color){
-                        return false;
-                    }
-                    else {
-                        finalX = this.x-1;
-                        finalY = this.y-1;
-                    }
-                }
-                this.x--;
-                this.y--;
-            }
-            return true;
-        }
-        else if(finalX > this.x && finalY < this.y){
-            while (this.x != finalX && this.y != finalY){
-                if (board[this.x+1][this.y-1] != null){
-                    if (this.color == board[this.x+1][this.y-1].color){
-                        return false;
-                    }
-                    else {
                         finalX = this.x+1;
-                        finalY = this.y-1;
                     }
                 }
+                this.y++;
                 this.x++;
-                this.y--;
             }
             return true;
         }
-        else if(finalX < this.x && finalY > this.y){
-            while (this.x != finalX && this.y != finalY){
-                if (board[this.x-1][this.y+1] != null){
-                    if (this.color == board[this.x-1][this.y+1].color){
+        else if(finalY < this.y && finalX < this.x){
+            while (this.y != finalY && this.x != finalX){
+                if (board[this.y-1][this.x-1] != null){
+                    if (this.color == board[this.y-1][this.x-1].color){
                         return false;
                     }
                     else {
+                        finalY = this.y-1;
                         finalX = this.x-1;
-                        finalY = this.y+1;
                     }
                 }
+                this.y--;
                 this.x--;
+            }
+            return true;
+        }
+        else if(finalY > this.y && finalX < this.x){
+            while (this.y != finalY && this.x != finalX){
+                if (board[this.y+1][this.x-1] != null){
+                    if (this.color == board[this.y+1][this.x-1].color){
+                        return false;
+                    }
+                    else {
+                        finalY = this.y+1;
+                        finalX = this.x-1;
+                    }
+                }
                 this.y++;
+                this.x--;
+            }
+            return true;
+        }
+        else if(finalY < this.y && finalX > this.x){
+            while (this.y != finalY && this.x != finalX){
+                if (board[this.y-1][this.x+1] != null){
+                    if (this.color == board[this.y-1][this.x+1].color){
+                        return false;
+                    }
+                    else {
+                        finalX = this.y-1;
+                        finalY = this.x+1;
+                    }
+                }
+                this.y--;
+                this.x++;
             }
             return true;
         }

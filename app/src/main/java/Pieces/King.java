@@ -32,6 +32,9 @@ public class King extends Piece
     {
         return this.color;
     }
+    public String toString() {
+        return type.name() + ": " + this.x + ", " + this.y;
+    }
     @Override
     public void draw(Canvas canvas) {
         if(color == 0)
@@ -55,55 +58,55 @@ public class King extends Piece
             canvas.drawBitmap(bk, src, dst, p);
         }
     }
-    public boolean isValidPath(int finalX, int finalY, Piece [][] board)
+    public boolean isValidPath(int finalY, int finalX, Piece [][] board)
     {
         int xdif = Math.abs(finalX - this.x);
         int ydif = Math.abs(finalY - this.y);
-        if(xdif<=1 && ydif <= 1){
-            if (finalX > this.x && finalY > this.y){
-                if(board[this.x+1][this.y+1] != null && board[this.x+1][this.y+1].color == this.color){
+        if(ydif<=1 && xdif <= 1){
+            if (finalY > this.y && finalX > this.x){
+                if(board[this.y+1][this.x+1] != null && board[this.y+1][this.x+1].color == this.color){
                     return false;
                 }
                 return true;
             }
-            else if (finalX < this.x && finalY < this.y){
-                if(board[this.x-1][this.y-1] != null && board[this.x-1][this.y-1].color == this.color){
+            else if (finalY < this.y && finalX < this.x){
+                if(board[this.y-1][this.x-1] != null && board[this.y-1][this.x-1].color == this.color){
                     return false;
                 }
                 return true;
             }
-            else if (finalX > this.x && finalY < this.y){
-                if(board[this.x+1][this.y-1] != null && board[this.x+1][this.y-1].color == this.color){
+            else if (finalY > this.y && finalX < this.x){
+                if(board[this.y+1][this.x-1] != null && board[this.y+1][this.x-1].color == this.color){
                     return false;
                 }
                 return true;
             }
-            else if (finalX < this.x && finalY > this.y){
-                if(board[this.x-1][this.y+1] != null && board[this.x-1][this.y+1].color == this.color){
+            else if (finalY < this.y && finalX > this.x){
+                if(board[this.y-1][this.x+1] != null && board[this.y-1][this.x+1].color == this.color){
                     return false;
                 }
                 return true;
             }
-            else if (finalX == this.x && finalY > this.y){
-                if(board[this.x][this.y+1] != null && board[this.x][this.y+1].color == this.color){
+            else if (finalY == this.y && finalX > this.x){
+                if(board[this.y][this.x+1] != null && board[this.y][this.x+1].color == this.color){
                     return false;
                 }
                 return true;
             }
-            else if (finalX == this.x && finalY < this.y){
-                if(board[this.x][this.y-1] != null && board[this.x][this.y-1].color == this.color){
+            else if (finalY == this.y && finalX < this.x){
+                if(board[this.y][this.x-1] != null && board[this.y][this.x-1].color == this.color){
                     return false;
                 }
                 return true;
             }
-            else if (finalX > this.x && finalY == this.y){
-                if(board[this.x+1][this.y] != null && board[this.x+1][this.y].color == this.color){
+            else if (finalY > this.y && finalX == this.x){
+                if(board[this.y+1][this.x] != null && board[this.y+1][this.x].color == this.color){
                     return false;
                 }
                 return true;
             }
-            else if (finalX < this.x && finalY == this.y){
-                if(board[this.x-1][this.y] != null && board[this.x-1][this.y].color == this.color){
+            else if (finalY < this.y && finalX == this.x){
+                if(board[this.y-1][this.x] != null && board[this.y-1][this.x].color == this.color){
                     return false;
                 }
                 return true;
