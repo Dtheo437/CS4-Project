@@ -76,7 +76,6 @@ public class GameView extends View
         board[6][6] = new Pawn(6, 6, Piece.WHITE, getResources());
         board[6][7] = new Pawn(6, 7, Piece.WHITE, getResources());
     }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float col = event.getX()/squareSize;

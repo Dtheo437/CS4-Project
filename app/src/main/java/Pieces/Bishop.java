@@ -130,8 +130,8 @@ public class Bishop extends Piece
                     else
                         return false;
                 }
-                this.y--;
-                this.x++;
+                tempy--;
+                tempx++;
             }
             return true;
         }
@@ -147,7 +147,6 @@ public class Bishop extends Piece
             int xSpot = x * (int)GameView.squareSize;
             int ySpot = y * (int)GameView.squareSize;
             Rect dst = new Rect(ySpot, xSpot, (int)GameView.squareSize + ySpot, (int)GameView.squareSize + xSpot);
-//        Rect trial = new Rect(40, 0, (int)GameView.squareSize + 40, (int)GameView.squareSize);
             canvas.drawBitmap(wb, src, dst, p);
         }
         else
@@ -157,7 +156,6 @@ public class Bishop extends Piece
             int xSpot = x * (int)GameView.squareSize;
             int ySpot = y * (int)GameView.squareSize;
             Rect dst = new Rect(ySpot, xSpot, (int)GameView.squareSize + ySpot, (int)GameView.squareSize + xSpot);
-//        Rect trial = new Rect(40, 0, (int)GameView.squareSize + 40, (int)GameView.squareSize);
             canvas.drawBitmap(bb, src, dst, p);
         }
 
