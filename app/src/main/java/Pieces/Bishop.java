@@ -60,7 +60,7 @@ public class Bishop extends Piece
             while (tempy != finalY && tempx != finalX){
                 if (board[tempx+1][tempy+1] != null){
                     //down right W
-                    if (this.color == board[tempy+1][tempx+1].color){
+                    if (this.color == board[tempx+1][tempy+1].color){
                         return false;
                     }
                     else if(tempy+1 == finalY && tempx+1 == finalX){
