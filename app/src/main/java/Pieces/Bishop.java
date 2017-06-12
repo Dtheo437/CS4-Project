@@ -47,8 +47,8 @@ public class Bishop extends Piece
     {
         int tempx;
         int tempy;
-        Log.i("DEBUG", "Bishop , this.x: " + this.x + " this.y: " + this.y);
-        Log.i("DEBUG", "Bishop , finalX: " + finalX + " finalY: " + finalY);
+        //Log.i("DEBUG", "Bishop , this.x: " + this.x + " this.y: " + this.y);
+        //Log.i("DEBUG", "Bishop , finalX: " + finalX + " finalY: " + finalY);
         int xdif = Math.abs(finalX - this.x);
         int ydif = Math.abs(finalY - this.y);
         if (xdif != ydif){

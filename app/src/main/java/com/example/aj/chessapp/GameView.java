@@ -3,16 +3,13 @@ package com.example.aj.chessapp;
 
 import android.graphics.*;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.location.Location;
-import android.media.Image;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.content.Context;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import Pieces.Bishop;
 import Pieces.King;
@@ -21,8 +18,6 @@ import Pieces.Pawn;
 import Pieces.Piece;
 import Pieces.Queen;
 import Pieces.Rook;
-
-import static com.example.aj.chessapp.R.drawable.bb;
 
 /**
  * Created by AJ on 6/7/2017.
@@ -98,54 +93,185 @@ public class GameView extends View
         }
         else
         {
-            if(board[(int)row][(int)col] == null && selectedPiece.isValidPath((int)row,(int)col,board))
+            /***
+            Log.i("DEBUG", "Color " + selectedPiece.getColor());
+            Log.i("DEBUG", "Turn " + whiteTurn);
+            Log.i("DEBUG", "check " + check(board, whiteTurn));
+            if(selectedPiece.getColor()== Piece.WHITE && whiteTurn && check(board, whiteTurn))
             {
-                Log.i("DEBUG", "Valid Path " + selectedPiece.x);
-                Log.i("DEBUG", "Valid Path " + selectedPiece.y);
-                board[selectedPiece.x][selectedPiece.y] =null;
-                if(board[selectedPiece.x][selectedPiece.y] ==null)
-                    Log.i("DEBUG", "Null at " + "x: " + selectedPiece.x +" y: " + selectedPiece.y);
+                Log.i("DEBUG", "White King is in check " + selectedPiece.toString());
+                selectedPiece=null;
+            }
+            if(selectedPiece.getColor()== Piece.BLACK && !whiteTurn && check(board, whiteTurn))
+            {
+                Log.i("DEBUG", "Black King is in check " + selectedPiece.toString());
+                selectedPiece=null;
+            }
+             */
+            if (selectedPiece.isValidPath((int)row, (int)col, board)) {
+                Piece prev = board[(int)row][(int)col];
+                board[(int)row][(int)col] = selectedPiece;
+                int tmpX = selectedPiece.x;
+                int tmpY = selectedPiece.y;
                 selectedPiece.x = (int)row;
                 selectedPiece.y = (int)col;
-                board[(int)row][(int)col] = selectedPiece;
-                Log.i("DEBUG", selectedPiece.toString());
-                selectedPiece = null;
+                boolean inCheck = check(board, !whiteTurn);
+                if (inCheck) {
+                    // Move back -- invalid move
+                    Log.i("DEBUG", "Moved into check. Moving back");
+                    selectedPiece.x = tmpX;
+                    selectedPiece.y = tmpY;
+                    board[(int)row][(int)col] = prev;
+                    board[tmpX][tmpY] = selectedPiece;
+                }
+                /*
+                else {
+                    // Check if the turn player has mated the opponent after his move
+                    //king valid moves? can anypiece block
+                    King king = findKing(whiteTurn ? Piece.BLACK : Piece.WHITE);
+                    //holds whether it is valid or not
+                    int[][] kingMoves = {
+                            {king.x - 1, king.y},
+                            {king.x - 1, king.y + 1},
+                            {king.x, king.y + 1},
+                            {king.x + 1, king.y + 1},
+                            {king.x + 1, king.y},
+                            {king.x + 1, king.y - 1},
+                            {king.x, king.y - 1},
+                            {king.x - 1, king.y - 1}
+                    };
+                    for (int[] pos : kingMoves) {
+                        if (pos[0] < 0 || pos[0] > 7 || pos[1] < 0 || pos[1] > 7) continue;
+
+                        if(king.isValidPath(pos[0], pos[1], board))
+                        {
+                            prev = board[pos[0]][pos[1]];
+                            board[pos[0]][pos[1]] = king;
+                            tmpX = king.x;
+                            tmpY = king.y;
+                            king.x=pos[0];
+                            king.y=pos[1];
+                            if(check(board, !whiteTurn))
+                            {
+                                king.x = tmpX;
+                                king.y = tmpY;
+                                board[pos[0]][pos[1]] = prev;
+                                board[tmpX][tmpY] = king;
+
+                            }
+                        }
+                    }
+
+                }*/
                 whiteTurn = !whiteTurn;
-            }
-            else if(board[(int)row][(int)col] == null && !selectedPiece.isValidPath((int)row,(int)col,board))
-            {
-                Log.i("DEBUG", "Invalid Path " + selectedPiece.toString());
-                selectedPiece =null;
-                //((TextView)findViewById(R.id.Location)).setText("Invalid Move"); - doesnt work
-            }
-            else if(board[(int)row][(int)col].getColor()==selectedPiece.getColor())
-            {
-                selectedPiece = board[(int)row][(int)col];
-                Log.i("DEBUG", "New SelectedPiece " + selectedPiece.toString());
-            }
-            else if(board[(int)row][(int)col].getColor()!=selectedPiece.getColor())
-            {
-                if(selectedPiece.isValidPath((int)row,(int)col,board))
-                {
-                    Log.i("DEBUG", "Take Piece " + selectedPiece.x);
-                    Log.i("DEBUG", "Take Piece " + selectedPiece.y);
-                    board[selectedPiece.x][selectedPiece.y] =null;
-                    selectedPiece.x = (int)row;
-                    selectedPiece.y = (int)col;
-                    board[(int)row][(int)col] = selectedPiece;
-                    Log.i("DEBUG", selectedPiece.toString());
-                    selectedPiece = null;
-                    whiteTurn = !whiteTurn;
+                selectedPiece = null;
+            } else {
+                Piece dst = board[(int)row][(int)col];
+                if (dst != null && dst.getColor() == selectedPiece.getColor()) {
+                    selectedPiece = dst;
                 }
-                else
-                {
-                    Log.i("DEBUG", "Invalid Path - Take" + selectedPiece.toString());
-                    selectedPiece = null;
-                }
+                selectedPiece = null;
             }
+
+//            if(board[(int)row][(int)col] == null && selectedPiece.isValidPath((int)row,(int)col,board))
+//            {
+//                Log.i("DEBUG", "Valid Path " + selectedPiece.x);
+//                Log.i("DEBUG", "Valid Path " + selectedPiece.y);
+//                board[selectedPiece.x][selectedPiece.y] =null;
+//                if(board[selectedPiece.x][selectedPiece.y] ==null)
+//                    Log.i("DEBUG", "Null at " + "x: " + selectedPiece.x +" y: " + selectedPiece.y);
+//                selectedPiece.x = (int)row;
+//                selectedPiece.y = (int)col;
+//                board[(int)row][(int)col] = selectedPiece;
+//                Log.i("DEBUG", selectedPiece.toString());
+//                selectedPiece = null;
+//                whiteTurn = !whiteTurn;
+//            }
+//            else if(board[(int)row][(int)col] == null && !selectedPiece.isValidPath((int)row,(int)col,board))
+//            {
+//                Log.i("DEBUG", "Invalid Path " + selectedPiece.toString());
+//                selectedPiece =null;
+//                //((TextView)findViewById(R.id.Location)).setText("Invalid Move"); - doesnt work
+//            }
+//            else if(board[(int)row][(int)col].getColor()==selectedPiece.getColor())
+//            {
+//                selectedPiece = board[(int)row][(int)col];
+//                Log.i("DEBUG", "New SelectedPiece " + selectedPiece.toString());
+//            }
+//            else if(board[(int)row][(int)col].getColor()!=selectedPiece.getColor())
+//            {
+//                if(selectedPiece.isValidPath((int)row,(int)col,board))
+//                {
+//                    Log.i("DEBUG", "Take Piece " + selectedPiece.x);
+//                    Log.i("DEBUG", "Take Piece " + selectedPiece.y);
+//                    board[selectedPiece.x][selectedPiece.y] =null;
+//                    selectedPiece.x = (int)row;
+//                    selectedPiece.y = (int)col;
+//                    board[(int)row][(int)col] = selectedPiece;
+//                    Log.i("DEBUG", selectedPiece.toString());
+//                    selectedPiece = null;
+//                    whiteTurn = !whiteTurn;
+//                }
+//                else
+//                {
+//                    Log.i("DEBUG", "Invalid Path - Take" + selectedPiece.toString());
+//                    selectedPiece = null;
+//                }
+//            }
         }
         this.invalidate();
         return super.onTouchEvent(event);
+    }
+
+    /**
+     * Check if there is a player's king in in check.
+     * @param board
+     * @param whiteTurn
+     * @return true if there is a player's king in in check
+     */
+    boolean check(Piece[][] board, boolean whiteTurn)
+    {
+        Piece king;
+        ArrayList<Piece> foePieces;
+        if (whiteTurn) {
+            king = findKing(Piece.WHITE);
+            foePieces = getPlayerPieces(Piece.BLACK);
+        } else {
+            king = findKing(Piece.BLACK);
+            foePieces = getPlayerPieces(Piece.WHITE);
+        }
+
+        for (Piece p : foePieces) {
+            if (p.isValidPath(king.x, king.y, board)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private King findKing(int color) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Piece p = board[i][j];
+                if (p != null && p.getType() == Type.KING && p.getColor() == color) {
+                    return (King)p;
+                }
+            }
+        }
+        return null; // never happen
+    }
+
+    private ArrayList<Piece> getPlayerPieces(int color) {
+        ArrayList<Piece> pieces = new ArrayList<>(16);
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Piece p = board[i][j];
+                if (p != null && p.getColor() == color) {
+                    pieces.add(p);
+                }
+            }
+        }
+        return pieces;
     }
 
     protected void onDraw(Canvas canvas)
