@@ -3,6 +3,7 @@ package com.example.aj.chessapp;
 import android.graphics.*;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.media.Image;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.content.Context;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import Pieces.Bishop;
 import Pieces.King;
@@ -37,53 +39,55 @@ public class GameView extends View
         super(context);
         whiteTurn = true;
         board = new Piece[8][8];
+
         board[0][0] = new Rook(0, 0, Piece.BLACK, getResources());
-        board[1][0] = new Knight(1, 0, Piece.BLACK, getResources());
-        board[2][0] = new Bishop(2, 0, Piece.BLACK, getResources());
-        board[3][0] = new Queen(3, 0, Piece.BLACK, getResources());
-        board[4][0] = new King(4, 0, Piece.BLACK, getResources());
-        board[5][0] = new Bishop(5, 0, Piece.BLACK, getResources());
-        board[6][0] = new Knight(6, 0, Piece.BLACK, getResources());
-        board[7][0] = new Rook(7, 0, Piece.BLACK, getResources());
+        board[0][1] = new Knight(0, 1, Piece.BLACK, getResources());
+        board[0][2] = new Bishop(0, 2, Piece.BLACK, getResources());
+        board[0][3] = new Queen(0, 3, Piece.BLACK, getResources());
+        board[0][4] = new King(0, 4, Piece.BLACK, getResources());
+        board[0][5] = new Bishop(0, 5, Piece.BLACK, getResources());
+        board[0][6] = new Knight(0, 6, Piece.BLACK, getResources());
+        board[0][7] = new Rook(0, 7, Piece.BLACK, getResources());
 
-        board[0][1] = new Pawn(0, 1, Piece.BLACK, getResources());
+        board[1][0] = new Pawn(1, 0, Piece.BLACK, getResources());
         board[1][1] = new Pawn(1, 1, Piece.BLACK, getResources());
-        board[2][1] = new Pawn(2, 1, Piece.BLACK, getResources());
-        board[3][1] = new Pawn(3, 1, Piece.BLACK, getResources());
-        board[4][1] = new Pawn(4, 1, Piece.BLACK, getResources());
-        board[5][1] = new Pawn(5, 1, Piece.BLACK, getResources());
-        board[6][1] = new Pawn(6, 1, Piece.BLACK, getResources());
-        board[7][1] = new Pawn(7, 1, Piece.BLACK, getResources());
+        board[1][2] = new Pawn(1, 2, Piece.BLACK, getResources());
+        board[1][3] = new Pawn(1, 3, Piece.BLACK, getResources());
+        board[1][4] = new Pawn(1, 4, Piece.BLACK, getResources());
+        board[1][5] = new Pawn(1, 5, Piece.BLACK, getResources());
+        board[1][6] = new Pawn(1, 6, Piece.BLACK, getResources());
+        board[1][7] = new Pawn(1, 7, Piece.BLACK, getResources());
 
-        board[0][7] = new Rook(0, 7, Piece.WHITE, getResources());
-        board[1][7] = new Knight(1, 7, Piece.WHITE, getResources());
-        board[2][7] = new Bishop(2, 7, Piece.WHITE, getResources());
-        board[3][7] = new Queen(3, 7, Piece.WHITE, getResources());
-        board[4][7] = new King(4, 7, Piece.WHITE, getResources());
-        board[5][7] = new Bishop(5, 7, Piece.WHITE, getResources());
-        board[6][7] = new Knight(6, 7, Piece.WHITE, getResources());
+        board[7][0] = new Rook(7, 0, Piece.WHITE, getResources());
+        board[7][1] = new Knight(7, 1, Piece.WHITE, getResources());
+        board[7][2] = new Bishop(7, 2, Piece.WHITE, getResources());
+        board[7][3] = new Queen(7, 3, Piece.WHITE, getResources());
+        board[7][4] = new King(7, 4, Piece.WHITE, getResources());
+        board[7][5] = new Bishop(7, 5, Piece.WHITE, getResources());
+        board[7][6] = new Knight(7, 6, Piece.WHITE, getResources());
         board[7][7] = new Rook(7, 7, Piece.WHITE, getResources());
 
-        board[0][6] = new Pawn(0, 6, Piece.WHITE, getResources());
-        board[1][6] = new Pawn(1, 6, Piece.WHITE, getResources());
-        board[2][6] = new Pawn(2, 6, Piece.WHITE, getResources());
-        board[3][6] = new Pawn(3, 6, Piece.WHITE, getResources());
-        board[4][6] = new Pawn(4, 6, Piece.WHITE, getResources());
-        board[5][6] = new Pawn(5, 6, Piece.WHITE, getResources());
+        board[6][0] = new Pawn(6, 0, Piece.WHITE, getResources());
+        board[6][1] = new Pawn(6, 1, Piece.WHITE, getResources());
+        board[6][2] = new Pawn(6, 2, Piece.WHITE, getResources());
+        board[6][3] = new Pawn(6, 3, Piece.WHITE, getResources());
+        board[6][4] = new Pawn(6, 4, Piece.WHITE, getResources());
+        board[6][5] = new Pawn(6, 5, Piece.WHITE, getResources());
         board[6][6] = new Pawn(6, 6, Piece.WHITE, getResources());
-        board[7][6] = new Pawn(7, 6, Piece.WHITE, getResources());
+        board[6][7] = new Pawn(6, 7, Piece.WHITE, getResources());
     }
-
+/*
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX()/squareSize;
         float y = event.getY()/squareSize;
+        //(TextView)findViewById(R.id.Location).setText
         if(selectedPiece == null)
         {
-            if(board[(int)x][(int)y].getColor()==0 && whiteTurn)
-                selectedPiece = board[(int)x][(int)y];
-            if(board[(int)x][(int)y].getColor()==1 && !whiteTurn)
-                selectedPiece = board[(int)x][(int)y];
+            if(board[(int)x][(int)y].getColor()==Piece.WHITE && whiteTurn)
+                selectedPiece = board[(int)y][(int)x];
+            if(board[(int)x][(int)y].getColor()==Piece.BLACK && !whiteTurn)
+                selectedPiece = board[(int)y][(int)x];
         }
         else
         {
@@ -118,7 +122,7 @@ public class GameView extends View
         }
         return super.onTouchEvent(event);
     }
-
+*/
     protected void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
