@@ -126,6 +126,7 @@ public class Pawn extends Piece
         }
         if((xdif == 1 && ydif == 0) && this.color == Piece.WHITE) {
             //White Forward 1
+            firstMove = false;
             if(finalX<this.x) {
                 if (board[finalX][finalY] != null) {
                     return false;
@@ -137,6 +138,7 @@ public class Pawn extends Piece
         }
         if((xdif == 1 && ydif == 0) && this.color == Piece.BLACK) {
             //Black Forward 1
+            firstMove = false;
             if(finalX>this.x) {
                 if (board[finalX][finalY] != null) {
                     return false;

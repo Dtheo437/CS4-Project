@@ -32,7 +32,6 @@ public class GameView extends View
 {
     private Piece[][] board;
     public Piece selectedPiece;
-    public Piece selectedPiece2;
     public boolean whiteTurn;
     public static float squareSize;
     public GameView(Context context, AttributeSet attr)
@@ -88,9 +87,14 @@ public class GameView extends View
             {
                 if(board[(int)row][(int)col].getColor()==Piece.WHITE && whiteTurn)
                     selectedPiece = board[(int)row][(int)col];
-                if(board[(int)row][(int)col].getColor()==Piece.BLACK && !whiteTurn)
+                else if(board[(int)row][(int)col].getColor()==Piece.BLACK && !whiteTurn)
                     selectedPiece = board[(int)row][(int)col];
-                Log.i("DEBUG","SP NULL" + selectedPiece.toString());
+                else
+                {
+                    Log.i("DEBUG","SP NULL: Wrong Turn");
+                }
+                if(selectedPiece != null)
+                    Log.i("DEBUG","SP NULL" + selectedPiece.toString());
             }
         }
         else
@@ -107,6 +111,7 @@ public class GameView extends View
                 board[(int)row][(int)col] = selectedPiece;
                 Log.i("DEBUG", selectedPiece.toString());
                 selectedPiece = null;
+                whiteTurn = !whiteTurn;
             }
             else if(board[(int)row][(int)col] == null && !selectedPiece.isValidPath((int)row,(int)col,board))
             {
@@ -131,6 +136,7 @@ public class GameView extends View
                     board[(int)row][(int)col] = selectedPiece;
                     Log.i("DEBUG", selectedPiece.toString());
                     selectedPiece = null;
+                    whiteTurn = !whiteTurn;
                 }
                 else
                 {
